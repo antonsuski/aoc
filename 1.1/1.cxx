@@ -24,12 +24,13 @@ int main (int argc, char** argv)
 
 	std::fstream file;
 	file.open(path, std::ios::in);
+
 	if (!file.is_open ())
 	{
 		std::cout << "Can't open file: " << path << std::endl;
 	}
-	std::cout << "File " << path << " has been open" << std::endl;
 
+	std::cout << "File " << path << " has been open" << std::endl;
 	std::cout << "Hello, Advenging of Code" << std::endl; 
 
 	std::vector<int> lv{};
@@ -37,7 +38,6 @@ int main (int argc, char** argv)
 	
 	for (int a, b; (file >> a) && (file >> b);)
 	{
-//		std::cout << "values: " << a << " " << b << std::endl;
 		lv.push_back(a);
 		rv.push_back(b);
 	}
@@ -46,14 +46,16 @@ int main (int argc, char** argv)
 	std::ranges::sort (rv);
 
 	int diff {};
+
 	for (size_t i {}; i < lv.size(); i++)
 	{
 		diff += std::abs (lv[i] - rv[i]);
 	}
-	std::cout << "Result: " << diff << std::endl;
 
+	std::cout << "Result: " << diff << std::endl;
 	file.close();
 	std::cout << "File " << path << " has been close" << std::endl;
+
 	return 0;
 }
 
