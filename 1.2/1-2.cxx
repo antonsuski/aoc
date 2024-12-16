@@ -5,6 +5,26 @@
 #include <algorithm>
 #include <ranges>
 #include <cmath>
+#include <unordered_map>
+#include <ostream>
+
+// template<typename T, typename U>
+// std::ostream operator<< (std::ostream& out, const std::unordered_map&<T,U> u_map)
+// {
+// 	for (const auto&[key, val]: u_map)
+//	{
+//		out << "[key: " << key << "][val" << val << "]\n";
+//	}
+//
+//	out << std::endl;
+//
+//	return out;
+// }
+
+auto print_key_val (const auto& key, const auto& val)
+{
+	std::cout << "[key: " << key << "][val: " << val << "]\n";
+}
 
 int main (int argc, char** argv)
 {
@@ -42,17 +62,29 @@ int main (int argc, char** argv)
 		rv.push_back(b);
 	}
 
-	std::ranges::sort (lv);
-	std::ranges::sort (rv);
+	std::unordered_map<int, int> rum;
 
-	int diff {};
-
-	for (size_t i {}; i < lv.size(); i++)
+	for (auto &&i : rv)
 	{
-		diff += std::abs (lv[i] - rv[i]);
+		rum.insert({i, 0});
+		rum[i]++;
+	}	
+
+	for (const auto &[key, val]:rum)
+	{
+		print_key_val(key, val);
 	}
 
-	std::cout << "Result: " << diff << std::endl;
+	std::cout << "-----------------------\n";
+	unsigned int sum {};
+	for (const auto& i:lv)
+	{
+		print_key_val(i, rum[i]);
+		sum += rum[i] * i;
+	}
+
+	std::cout << "###########\n Result: " << sum << std::endl;
+
 	file.close();
 	std::cout << "File " << path << " has been close" << std::endl;
 
